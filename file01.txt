@@ -1,6 +1,0 @@
-hello
-new file from dev
-
-from forked repo
-
-from overclock
