@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <malloc.h>
+
+int main() {
+	
+	int buff_size = 0;
+	char *dyn_buff;
+
+	scan("%ms %*s", &dyn_buff);  //con quella m chiediamo alla scanf
+	di preocupparsi di allocare la memoria su cui poi salvare andrà a 
+	salvare cosa corrisponde l'input che abbiamo inserito da tastiera 
+
+	//while(dyn_buff[buff_size++] != '\0';
+	
+	printf("\nStringa inserita nel buffer allocato dinamicamente")
+	printf("\nTaglia del buffer allocato dinamicamente 
