@@ -4,17 +4,14 @@ import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class Labirinto {
 	
-	private Stanza stanzaIniziale;
 	private Stanza stanzaVincente;
+	private Stanza stanzaIniziale;
 	
 	public Labirinto() {
 		this.creaStanze();
 	}
-	
-	/**
-     * Crea tutte le stanze e le porte di collegamento
-     */
-    private void creaStanze() {
+
+	private void creaStanze() {
 
 		/* crea gli attrezzi */
     	Attrezzo lanterna = new Attrezzo("lanterna",3);
@@ -49,12 +46,21 @@ public class Labirinto {
         stanzaIniziale = atrio;  
 		stanzaVincente = biblioteca;
     }
-    
-    public Stanza getStanzaIniziale() {
-    	return this.stanzaIniziale;
-    }
-    
-    public Stanza getStanzaVincente() {
-    	return this.stanzaVincente;
-    }
+	
+	/**
+	 * 
+	 * @return restituisce la stanza vicente
+	 */
+	public Stanza getStanzaVincente () {
+		return stanzaVincente;
+	}
+	
+	/**
+	 * 
+	 * @return restituisce la stanza di ingresso
+	 */
+
+	public Stanza getStanzaIniziale() {
+		return stanzaIniziale;
+	}
 }

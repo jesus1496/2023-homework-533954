@@ -2,7 +2,7 @@ package it.uniroma3.diadia.giocatore;
 
 public class Giocatore {
 	
-	static final private int CFU_INIZIALI = 20;
+	static final public int CFU_INIZIALI = 20;
 	
 	private int cfu;
 	private Borsa borsa;
@@ -12,15 +12,32 @@ public class Giocatore {
 		this.borsa = new Borsa();
 	}
 	
+	/**
+	 * 
+	 * @return il numero di CFU corrente
+	 */
 	public int getCfu() {
 		return this.cfu;
 	}
 	
-	public void setCfu(int cfu) {
+	/**
+	 * aggiorna il numero di cfu
+	 * @param cfu aggiornate
+	 */
+	public void setCfu(int cfu2) {
 		this.cfu = cfu;
 	}
-
+	
+	/**
+	 * 
+	 * @return la borsa del giocatore
+	 */
 	public Borsa getBorsa() {
-		return this.borsa;
+		return borsa;
 	}
+	
+	public void setBorsa(Borsa borsa) {
+		this.borsa = borsa;
+	}
+	
 }

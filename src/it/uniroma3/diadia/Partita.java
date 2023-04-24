@@ -14,62 +14,23 @@ import it.uniroma3.diadia.giocatore.Giocatore;
 
 public class Partita {
 
-//	static final private int CFU_INIZIALI = 20;
-	
-	private Labirinto labirinto; //riferimento ad istanza di labirinto
-	private Giocatore giocatore; //riferimento ad istanza giocatore
 	private Stanza stanzaCorrente;
-//	private Stanza stanzaVincente;
 	private boolean finita;
-//	private int cfu;
+	private Labirinto labirinto;  //riferimento ad un'istanza di labirinto
+	private Giocatore giocatore;  //riferimento ad un'istanza di giocatore
 	
 	public Partita(){
-//		creaStanze();
-		this.finita = false;
-//		this.cfu = CFU_INIZIALI;
 		this.labirinto = new Labirinto();
 		this.stanzaCorrente = this.labirinto.getStanzaIniziale();
-		this.giocatore = new Giocatore();
+		this.finita = false;
+		this.setGiocatore(new Giocatore());
+		
 	}
 
-//    /**
-//     * Crea tutte le stanze e le porte di collegamento
-//     */
-//    private void creaStanze() {
-//
-//		/* crea gli attrezzi */
-//    	Attrezzo lanterna = new Attrezzo("lanterna",3);
-//		Attrezzo osso = new Attrezzo("osso",1);
-//    	
-//		/* crea stanze del labirinto */
-//		Stanza atrio = new Stanza("Atrio");
-//		Stanza aulaN11 = new Stanza("Aula N11");
-//		Stanza aulaN10 = new Stanza("Aula N10");
-//		Stanza laboratorio = new Stanza("Laboratorio Campus");
-//		Stanza biblioteca = new Stanza("Biblioteca");
-//		
-//		/* collega le stanze */
-//		atrio.impostaStanzaAdiacente("nord", biblioteca);
-//		atrio.impostaStanzaAdiacente("est", aulaN11);
-//		atrio.impostaStanzaAdiacente("sud", aulaN10);
-//		atrio.impostaStanzaAdiacente("ovest", laboratorio);
-//		aulaN11.impostaStanzaAdiacente("est", laboratorio);
-//		aulaN11.impostaStanzaAdiacente("ovest", atrio);
-//		aulaN10.impostaStanzaAdiacente("nord", atrio);
-//		aulaN10.impostaStanzaAdiacente("est", aulaN11);
-//		aulaN10.impostaStanzaAdiacente("ovest", laboratorio);
-//		laboratorio.impostaStanzaAdiacente("est", atrio);
-//		laboratorio.impostaStanzaAdiacente("ovest", aulaN11);
-//		biblioteca.impostaStanzaAdiacente("sud", atrio);
-//
-//        /* pone gli attrezzi nelle stanze */
-//		aulaN10.addAttrezzo(lanterna);
-//		atrio.addAttrezzo(osso);
-//
-//		// il gioco comincia nell'atrio
-//        stanzaCorrente = atrio;  
-//		stanzaVincente = biblioteca;
-//    }
+    /**
+     * Crea tutte le stanze e le porte di collegamento
+     */
+    
 
 	public Stanza getStanzaVincente() {
 		return this.labirinto.getStanzaVincente();
@@ -81,10 +42,6 @@ public class Partita {
 
 	public Stanza getStanzaCorrente() {
 		return this.stanzaCorrente;
-	}
-	
-	public Giocatore getGiocatore() {
-		return this.giocatore;
 	}
 	
 	/**
@@ -100,7 +57,7 @@ public class Partita {
 	 * @return vero se partita finita
 	 */
 	public boolean isFinita() {
-		return finita || vinta() || (this.giocatore.getCfu() == 0);
+		return finita || vinta() || (this.getCfu() == 0);
 	}
 
 	/**
@@ -111,11 +68,22 @@ public class Partita {
 		this.finita = true;
 	}
 
-//	public int getCfu() {
-//		return this.cfu;
-//	}
-//
-//	public void setCfu(int cfu) {
-//		this.cfu = cfu;		
-//	}	
+	public int getCfu() {
+		return this.giocatore.getCfu();
+	}
+
+	public void setCfu(int cfu) {
+		this.giocatore.setCfu(cfu);		
+	}
+
+	public Giocatore getGiocatore() {
+		return giocatore;
+	}
+
+	public void setGiocatore(Giocatore giocatore) {
+		this.giocatore = giocatore;
+	}
+
+	
+	
 }

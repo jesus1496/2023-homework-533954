@@ -1,5 +1,4 @@
 package it.uniroma3.diadia.attrezzi;
-
 import it.uniroma3.diadia.ambienti.Stanza;
 
 /**
@@ -48,7 +47,7 @@ public class Attrezzo {
 	 * @return la rappresentazione stringa
 	 */
 	public String toString() {
-		return this.getNome()+".Peso: ("+this.getPeso()+"kg)";
+		return this.getNome()+" ("+this.getPeso()+"kg)";
 	}
 
 }

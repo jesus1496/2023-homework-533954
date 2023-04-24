@@ -1,6 +1,4 @@
 package it.uniroma3.diadia.ambienti;
-
-import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 /**
@@ -17,15 +15,14 @@ import it.uniroma3.diadia.attrezzi.Attrezzo;
 public class Stanza {
 	
 	static final private int NUMERO_MASSIMO_DIREZIONI = 4;
-	static final private int NUMERO_MASSIMO_ATTREZZI = 10;
+	static final public int NUMERO_MASSIMO_ATTREZZI = 10;
 	
 	private String nome;
-    private Attrezzo[] attrezzi;
-    private int numeroAttrezzi;
+    private Attrezzo[] attrezzi;  // solo la prima parte dell'array è non nulla
+    private int numeroAttrezzi;    //contatore di riempimento dell'array sopra per una rappresentazione compatta
     private Stanza[] stanzeAdiacenti;
     private int numeroStanzeAdiacenti;
 	private String[] direzioni;
-	private IOConsole io;
     
     /**
      * Crea una stanza. Non ci sono stanze adiacenti, non ci sono attrezzi.
@@ -38,7 +35,6 @@ public class Stanza {
         this.direzioni = new String[NUMERO_MASSIMO_DIREZIONI];
         this.stanzeAdiacenti = new Stanza[NUMERO_MASSIMO_DIREZIONI];
         this.attrezzi = new Attrezzo[NUMERO_MASSIMO_ATTREZZI];
-        this.io = new IOConsole();;
     }
 
     /**
@@ -127,7 +123,7 @@ public class Stanza {
     		if (direzione!=null)
     			risultato.append(" " + direzione);
     	risultato.append("\nAttrezzi nella stanza: ");
-    	for (int i=0; i < this.numeroAttrezzi; i++) {
+    	for (int i = 0; i < this.numeroAttrezzi; i++) {
     		risultato.append(this.attrezzi[i]+" ");
     	}
     	return risultato.toString();
@@ -141,23 +137,24 @@ public class Stanza {
 		boolean trovato;
 		trovato = false;
 		for (Attrezzo attrezzo : this.attrezzi) {
-			if (attrezzo != null && attrezzo.getNome().equals(nomeAttrezzo))
-				trovato = true;
+			if(attrezzo != null)
+				if(attrezzo.getNome().equals(nomeAttrezzo))
+					trovato = true;
 		}
 		return trovato;
 	}
 
 	/**
      * Restituisce l'attrezzo nomeAttrezzo se presente nella stanza.
-	 * @param nomeAttrezzo
+	 * @param attrezzo2
 	 * @return l'attrezzo presente nella stanza.
      * 		   null se l'attrezzo non e' presente.
 	 */
-	public Attrezzo getAttrezzo(String nomeAttrezzo) {
+	public Attrezzo getAttrezzo(String attrezzo2) {
 		Attrezzo attrezzoCercato;
 		attrezzoCercato = null;
 		for (Attrezzo attrezzo : this.attrezzi) {
-			if (attrezzo != null && attrezzo.getNome().equals(nomeAttrezzo))
+			if (attrezzo != null && attrezzo.getNome().equals(attrezzo2))
 				attrezzoCercato = attrezzo;
 		}
 		return attrezzoCercato;	
@@ -169,7 +166,7 @@ public class Stanza {
 	 * @return true se l'attrezzo e' stato rimosso, false altrimenti
 	 */
 	public boolean removeAttrezzo(Attrezzo attrezzo) {
-		for(int i=0; i< this.attrezzi.length; i++) {
+		for(int i = 0; i< this.attrezzi.length; i++) {
 			if(this.attrezzi[i] != null && this.attrezzi[i].getNome().equals(attrezzo.getNome())) {
 				this.attrezzi[i] = null;
 				return true;

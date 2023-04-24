@@ -1,6 +1,5 @@
 package it.uniroma3.diadia;
 
-
 import java.util.Scanner;
 
 /**
@@ -31,8 +30,8 @@ public class Comando {
 		if (scannerDiParole.hasNext())
 			this.parametro = scannerDiParole.next();
     }
-
-    public String getNome() {
+    
+	public String getNome() {
         return this.nome;
     }
 
@@ -43,4 +42,10 @@ public class Comando {
     public boolean sconosciuto() {
         return (this.nome == null);
     }
+
+
+	public void esegui(Partita partita) {
+		// TODO Auto-generated method stub
+		
+	}
 }
