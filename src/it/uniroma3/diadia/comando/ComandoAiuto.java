@@ -1,17 +1,13 @@
 package it.uniroma3.diadia.comando;
 
-import it.uniroma3.diadia.IOConsole;
+import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.Partita;
 
 public class ComandoAiuto implements Comando {
 	
-	private IOConsole io;
-	private String[] elencoComandi;
+	private IO io;
+	static final public String[] elencoComandi = {"vai", "aiuto", "fine","prendi", "posa", "guarda"};
 	private final static String NOME = "aiuto";
-	
-	public ComandoAiuto(String[] elencoComandi) {
-		this.elencoComandi = elencoComandi;
-	}
 
 	@Override
 	public void esegue(Partita partita) {
@@ -25,15 +21,18 @@ public class ComandoAiuto implements Comando {
 		// TODO Auto-generated method stub
 	}
 	
+	@Override
 	public String getParametro() {
 		return null;
 	}
 	
+	@Override
 	public String getNome() {
 		return NOME;
 	}
 	
-	public void setIo(IOConsole io) {
+	@Override
+	public void setIo(IO io) {
 		this.io = io;
 	}
 

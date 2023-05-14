@@ -63,4 +63,9 @@ public class Labirinto {
 	public Stanza getStanzaIniziale() {
 		return stanzaIniziale;
 	}
+
+	public void setStanzaIniziale(Stanza iniziale) {
+		this.stanzaIniziale = iniziale;
+		
+	}
 }

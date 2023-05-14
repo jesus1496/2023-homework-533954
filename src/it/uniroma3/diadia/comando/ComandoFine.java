@@ -1,13 +1,13 @@
 package it.uniroma3.diadia.comando;
 
-import it.uniroma3.diadia.IOConsole;
+import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.Partita;
 
 public class ComandoFine implements Comando {
 	
-	private IOConsole io;
+	private IO io;
 	private static final String NOME = "fine";
-	private static final String MESSAGGIO_FINE = "Grazie di aver giocato!";
+	public static final String MESSAGGIO_FINE = "Grazie di aver giocato!";
 
 	@Override
 	public void esegue(Partita partita) {
@@ -21,7 +21,7 @@ public class ComandoFine implements Comando {
 	}
 
 	@Override
-	public void setIo(IOConsole io) {
+	public void setIo(IO io) {
 		this.io = io;
 	}
 
