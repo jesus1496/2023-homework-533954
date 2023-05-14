@@ -1,148 +1,134 @@
 package it.uniroma3.diadia;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
+import it.uniroma3.diadia.giocatore.Borsa;
 
 public class StanzaTest {
 	
-	private static final String ATTREZZO = "AttrezzoDiTest";
-	private static final String STANZA = "StanzaTest";
-	private static final String STANZA_ADIACENTE = "StanzaAdiacente";
-	private static final String NORD = "nord";
-	
-	protected Stanza stanza;
+	private static final String ATTREZZO = "attrezzoSemplice";
+	private static final String SECONDO_ATTREZZO = "secondoAttrezzo";
+	private Borsa borsa;
+	private static final int PESO_MAX_BORSA = 20;
 	
 	@Before
 	public void setUp() {
-		this.stanza = new Stanza(STANZA);
-	}
-
-	@Test
-	public void testImpostaStanzaAdiacenteSingola() {
-		Stanza adiacente = creaStanzaEImpostaAdiacente(this.stanza, STANZA_ADIACENTE, NORD);
-		assertEquals(adiacente, this.stanza.getStanzaAdiacente(NORD));
-	}
-	
-	@Test
-	public void testCambiaStanzaAdiacente() {
-		creaStanzaEImpostaAdiacente(this.stanza, STANZA_ADIACENTE, NORD);
-		Stanza nuova = creaStanzaEImpostaAdiacente(this.stanza,"Nuova Adiacente", NORD);
-		assertEquals(nuova, this.stanza.getStanzaAdiacente(NORD));
-	}
-	
-	//testare questo metodo che non ha inserito la nuova direzione quindi la nuova
-	@Test
-	public void testImportaMassimo4Stanze() {
-		Stanza adiacente = new Stanza(STANZA_ADIACENTE);
-		String[] direzioni = {"nord", "sud", "ovest", "est"};
-		for(String direzione: direzioni)  //per andare a impostare la stanza adiacente
-			this.stanza.impostaStanzaAdiacente(direzione, adiacente);
-		
-		String direzioneNuova = "sud-ovest";
-		creaStanzaEImpostaAdiacente(this.stanza,"Da non inserire",direzioneNuova);
-		
-		assertNotContains(this.stanza.getDirezioni(),direzioneNuova);
-	}
-	
-	//con questo metodo sono andato a capire se nel mio array è contenuta la direzione nuova, se contenuta
-	//restituisce il fallimento del metodo 
-	private void assertNotContains(String[] direzioni, String direzioneNuova) {
-		boolean contiene = false;
-		for(String direzione: direzioni)
-			if(direzione != null && direzione.equals(direzioneNuova))
-				contiene = true;
-				
-		assertFalse(contiene);
-	}
-	
-	//non ho messo nessuna stanza adiacente dentro Stanza, vado a testare che alla prima chiamata non ci sia
-	@Test
-	public void testGetStanzaAdiacenteNonEsistente() {
-		assertNull(this.stanza.getStanzaAdiacente(NORD));
-	}
-	
-	//crea una stanza è verifica che quella stanza non sia null
-	@Test
-	public void testGetStanzaAdiacenteEsistente() {
-		creaStanzaEImpostaAdiacente(this.stanza, STANZA_ADIACENTE, NORD);
-		assertNotNull(this.stanza.getStanzaAdiacente(NORD));
-	}
-	
-	//crea una stanza adiacente, è in quella stanza adiacente non dovrei trovare nulla
-	@Test
-	public void testGetStanzaAdiacenteDirezioneNonValida() {
-		creaStanzaEImpostaAdiacente(this.stanza, STANZA_ADIACENTE, NORD);
-		assertNull(this.stanza.getStanzaAdiacente("non valida"));
-	}
-	
-	//testa l'arra delle direzioni , che deve essere vuoto quando viene istanziata la stanza
-	@Test
-	public void testGetDirezioniVuoto() {
-		assertArrayEquals(new String[0], this.stanza.getDirezioni());
-	}
-	
-	//testa tutti gli oggetti all'intero dell'array che siano equals
-	@Test
-	public void testGetDirezioniSingleton() {
-		creaStanzaEImpostaAdiacente(this.stanza, STANZA_ADIACENTE, NORD);
-		String[] direzioni = new String[1];
-		direzioni[0] = NORD;
-		assertEquals(direzioni, this.stanza.getDirezioni());
+		this.borsa = new Borsa(PESO_MAX_BORSA);
 	}
 	
 	//aggiunge l'attrezzo alla stanza e va a testare che quel attrezzo sia presente nella stanza
 	@Test
 	public void testAddAttrezzoSingolo() {
-		Attrezzo attrezzoSemplice = new Attrezzo(ATTREZZO, 1);
-		this.stanza.addAttrezzo(attrezzoSemplice);
-		assertEquals(attrezzoSemplice, this.stanza.getAttrezzo(ATTREZZO));
-	}
-	
-	//aggiunge l'attrezzo alla
-	@Test
-	public void testAddAttrezziOltreMassimo() {
-		for(int i = 0; i < Stanza.NUMERO_MASSIMO_ATTREZZI; i++) {
-			Attrezzo attrezzoSemplice = new Attrezzo(ATTREZZO+i, 1);
-			assertTrue(this.stanza.addAttrezzo(attrezzoSemplice)); //aggiunge l'attrezzo alla stanza
-		}
-		Attrezzo attrezzoDiTroppo = new Attrezzo(ATTREZZO+Stanza.NUMERO_MASSIMO_ATTREZZI, 1);
-		assertFalse(this.stanza.addAttrezzo(attrezzoDiTroppo));
+		Attrezzo attrezzo = this.creaAttrezzoEAggiungiInBorsa(this.borsa, ATTREZZO, 1);
+		assertEquals(attrezzo, this.borsa.getAttrezzo(ATTREZZO));
 	}
 	
 	@Test
-	public void testHasAttrezzoSingolo () {
-		Attrezzo attrezzo = new Attrezzo(ATTREZZO, 1);
-		this.stanza.addAttrezzo(attrezzo);
-		assertTrue(this.stanza.hasAttrezzo(ATTREZZO));
+	public void testAttrezzoTroppoPesante() {
+		Attrezzo attrezzoPesante = new Attrezzo("ttrezzoPesante", PESO_MAX_BORSA+1);
+		assertFalse(this.borsa.addAttrezzo(attrezzoPesante));
 	}
 	
 	@Test
-	public void testHasAttrezzoStanzaVuota() {
-		assertFalse(this.stanza.hasAttrezzo(ATTREZZO));
+	public void testGetAttrezzoBorsaVuota() {
+		assertNull(this.borsa.getAttrezzo(ATTREZZO));
+	}
+	
+	@Test
+	public void testGetAttrezzoInesistente() {
+		creaAttrezzoEAggiungiInBorsa(this.borsa, ATTREZZO, 1);
+		assertNull(this.borsa.getAttrezzo("inesistente"));
+	}
+
+	@Test
+	public void testGetPesoMax() {
+		assertEquals(PESO_MAX_BORSA, this.borsa.getPesoMax());
+	}
+
+	@Test
+	public void testGetPesoIniziale() {
+		assertEquals(0, this.borsa.getPeso());
+	}
+
+	@Test
+	public void testGetPesoDopoAggiuntaAttrezzo() {
+		creaAttrezzoEAggiungiInBorsa(this.borsa, ATTREZZO, 1);
+		assertEquals(1, this.borsa.getPeso());
+	}
+	
+	@Test
+	public void testHasAttrezzoBorsaVuota() {
+		assertFalse(this.borsa.hasAttrezzo(ATTREZZO));
 	}
 	
 	//
 	@Test
+	public void testHasAttrezzoEsistente() {
+		this.creaAttrezzoEAggiungiInBorsa(this.borsa, ATTREZZO, 1);
+		assertTrue(this.borsa.hasAttrezzo(ATTREZZO));
+	}
+	
+	@Test
 	public void testHasAttrezzoInesistente() {
-		Attrezzo attrezzo = new Attrezzo(ATTREZZO, 1);
-		this.stanza.addAttrezzo(attrezzo);
-		assertFalse(this.stanza.hasAttrezzo("inesistente"));
+		creaAttrezzoEAggiungiInBorsa(this.borsa, ATTREZZO, 1);
+		assertFalse(this.borsa.hasAttrezzo("inesistente"));
+	}
+	
+	@Test
+	public void testGetContenutoOrdinatoPerPeso() {
+		creaAttrezzoEAggiungiInBorsa(this.borsa, SECONDO_ATTREZZO,2);
+		creaAttrezzoEAggiungiInBorsa(this.borsa, ATTREZZO,1);
+		List<Attrezzo> expected = Arrays.asList(new Attrezzo(ATTREZZO, 1), new Attrezzo(SECONDO_ATTREZZO, 2));
+		assertEquals(expected, this.borsa.getContenutoOrdinatoPerPeso());
+	}
+	
+	@Test
+	public void testGetContenutoOrdinatoPerNome() {
+		creaAttrezzoEAggiungiInBorsa(this.borsa, SECONDO_ATTREZZO,2);
+		creaAttrezzoEAggiungiInBorsa(this.borsa, ATTREZZO,1);
+		Set<Attrezzo> expected = new TreeSet<>(Arrays.asList(new Attrezzo(ATTREZZO, 1),
+				new Attrezzo(SECONDO_ATTREZZO, 2)));
+		assertEquals(expected, this.borsa.getContenutoOrdinatoPerNome());
 	}
 
-	//ho creato un metodo utilità
-	private Stanza creaStanzaEImpostaAdiacente(Stanza stanzaDiPartenza,String nomeStanzaAdiacente, String direzione) {
-		Stanza stanzaAdiacente = new Stanza(nomeStanzaAdiacente); //istanzio una nuova stanza
-		stanzaDiPartenza.impostaStanzaAdiacente(direzione, stanzaAdiacente); // imposta la stanza adiacente como stanza di partenza
-		return stanzaAdiacente;                                              //poi la restituisco
+	@Test
+	public void testGetContenutoRaggruppatoPerPeso() {
+		creaAttrezzoEAggiungiInBorsa(this.borsa, SECONDO_ATTREZZO,2);
+		creaAttrezzoEAggiungiInBorsa(this.borsa, ATTREZZO,1);
+		Map<Integer, Set<Attrezzo>> expected = new HashMap<>();
+		expected.put(1, Collections.singleton(new Attrezzo(ATTREZZO, 1)));
+		expected.put(2, Collections.singleton(new Attrezzo(SECONDO_ATTREZZO, 2)));
+		assertEquals(expected, this.borsa.getContenutoRaggrupatoPerPeso());
+	}
+	
+	@Test
+	public void testGetSortedSetOrdinatoPerPeso() {
+		creaAttrezzoEAggiungiInBorsa(this.borsa, SECONDO_ATTREZZO,1);
+		creaAttrezzoEAggiungiInBorsa(this.borsa, ATTREZZO,1);
+		Set<Attrezzo> expected = new TreeSet<>(Arrays.asList(new Attrezzo(ATTREZZO, 1),
+				new Attrezzo(SECONDO_ATTREZZO, 1)));
+		assertEquals(expected, this.borsa.getSortedSetOrdinatoPerPeso());
+	}
+	
+	private Attrezzo creaAttrezzoEAggiungiInBorsa(Borsa borsa, String nomeAttrezzo, int peso) {
+		Attrezzo attrezzo = new Attrezzo(nomeAttrezzo, peso);
+		borsa.addAttrezzo(attrezzo);
+		return attrezzo;
 	}
 
 }

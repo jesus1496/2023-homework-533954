@@ -7,43 +7,52 @@ import org.junit.Test;
 
 import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.Partita;
-import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 import it.uniroma3.diadia.comando.ComandoPosa;
-import it.uniroma3.diadia.giocatore.Borsa;
 
 public class ComandoPosaTest {
 
-	private static final String ATTREZZO_DA_POSARE = "AttrezzoDaPosare";
+	private Attrezzo attrezzo;
 	private ComandoPosa comandoPosa;
 	private Partita partita;
+	private IOConsole io;
 	
 	@Before
 	public void setUp() throws Exception {
 		this.comandoPosa = new ComandoPosa();
 		this.comandoPosa.setIo(new IOConsole());
 		this.partita = new Partita();
-		Borsa borsa = partita.getGiocatore().getBorsa();
-		Attrezzo attrezzoNuovo = new Attrezzo(ATTREZZO_DA_POSARE, 1);
-		borsa.addAttrezzo(attrezzoNuovo);
+		this.attrezzo = new Attrezzo("martello", 2); 
 	}
 	
 	@Test
-	public void testEseguiAttrezzoPresente() {
-		this.comandoPosa.setParametro(ATTREZZO_DA_POSARE);
-		this.comandoPosa.esegue(partita);
-		assertTrue(partita.getStanzaCorrente().hasAttrezzo(ATTREZZO_DA_POSARE));
-		assertFalse(partita.getGiocatore().getBorsa().hasAttrezzo(ATTREZZO_DA_POSARE));
+	public void testAttrezzoPosato() {
+		partita.getGiocatore().getBorsa().addAttrezzo(attrezzo);
+		comandoPosa.setParametro("martello");
+		comandoPosa.esegue(partita);
+		assertTrue(partita.getStanzaCorrente().hasAttrezzo("martello"));
 	}
 	
 	@Test 
-	public void testEseguiAttrezzoNonPresente(){
-		String nonPresente = "attrezzoNonPresente";
-		this.comandoPosa.setParametro(nonPresente);
-		this.comandoPosa.esegue(partita);
-		assertFalse(partita.getStanzaCorrente().hasAttrezzo(nonPresente));
-		assertFalse(partita.getStanzaCorrente().hasAttrezzo(ATTREZZO_DA_POSARE));
-		assertTrue(partita.getGiocatore().getBorsa().hasAttrezzo(ATTREZZO_DA_POSARE));
+	public void testAttrezzoPosatoNull(){
+		comandoPosa.setParametro("martello");
+		comandoPosa.esegue(partita);
+		assertFalse(partita.getStanzaCorrente().hasAttrezzo("martello"));
+	}
+	
+	public void creatoreAttrezzi() {
+		for(int i = 0; i<10; i++) {
+			partita.getStanzaCorrente().addAttrezzo(new Attrezzo("utensille"+i, 1));
+		}
+	}
+	
+	@Test
+	public void testTroppiAttrezzi() {
+		this.creatoreAttrezzi();
+		partita.getGiocatore().getBorsa().addAttrezzo(attrezzo);
+		comandoPosa.setParametro("martello");
+		comandoPosa.esegue(partita);
+		assertFalse(partita.getStanzaCorrente().hasAttrezzo("martello"));
 	}
 	
 //	@Test
