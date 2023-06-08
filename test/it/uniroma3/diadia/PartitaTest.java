@@ -8,15 +8,18 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test; //serve per importare l'annotazione del framework
+
+import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.ambienti.Stanza;
 
 public class PartitaTest {
 	
 	private Partita partita;
+	private Labirinto labirinto;
 	
 	@Before
 	public void setUp() {
-		this.partita = new Partita();
+		this.partita = new Partita(labirinto);
 	}
 
 	//testa che la stanza vincente di una partita non deve essere null

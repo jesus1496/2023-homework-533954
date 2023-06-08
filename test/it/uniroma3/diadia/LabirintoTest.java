@@ -1,6 +1,9 @@
 package it.uniroma3.diadia;
 
 import static org.junit.Assert.assertNotNull;
+
+import java.io.FileNotFoundException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,8 +14,8 @@ public class LabirintoTest {
 	private Labirinto labirinto;
 	
 	@Before
-	public void setUp() {
-		this.labirinto = new Labirinto();	
+	public void setUp() throws FileNotFoundException, FormatoFileNonValidoException {
+		this.labirinto = Labirinto.newBuilder("labirinto2.txt").getLabirinto();	
 	}
 	
 	@Test

@@ -4,30 +4,33 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
+import java.util.Scanner;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 import it.uniroma3.diadia.comando.ComandoPrendi;
 
 public class ComandoPrendiTest {
 
 	private Partita partita;
-	private Attrezzo attrezzo;
 	private Attrezzo attrezzoPesante;
 	private ComandoPrendi comandoPrendi;
 	private IOConsole io;
+	private Labirinto labirinto;
+	private Scanner scanner;
 	
 	@Before
 	public void setUp() throws Exception{
-		partita = new Partita();
-		attrezzo = new Attrezzo("martello", 2);
+		partita = new Partita(labirinto);
+		new Attrezzo("martello", 2);
 		attrezzoPesante = new Attrezzo("incudine", 11);
 		comandoPrendi = new ComandoPrendi();
-		io = new IOConsole();
+		io = new IOConsole(scanner);
 		comandoPrendi.setIo(io);
 	}
 	
@@ -51,7 +54,7 @@ public class ComandoPrendiTest {
 	@Test
 	public void testAttrezzoNonPresente() {
 		comandoPrendi.setParametro("martello");
-		comandoPrendi.esegue(partita);
+		comandoPrendi.esegui(partita);
 		assertFalse(attrezzoPresente("martello"));
 	}
 	
@@ -59,7 +62,7 @@ public class ComandoPrendiTest {
 	public void testAttrezzoPesante() {
 		partita.getStanzaCorrente().addAttrezzo(attrezzoPesante);
 		comandoPrendi.setParametro("incudine");
-		comandoPrendi.esegue(partita);
+		comandoPrendi.esegui(partita);
 		assertTrue(attrezzoPresente("incudine"));
 	}
 }

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import it.uniroma3.diadia.ambienti.Direzione;
 import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.ambienti.StanzaBloccata;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
@@ -17,21 +18,21 @@ public class StanzaBloccataTest {
 	
 	@Before
 	public void setUp() throws Exception{
-		sb = new StanzaBloccata("La stanza è bloccata", "ovest", "grimaldello");
+		sb = new StanzaBloccata("La stanza è bloccata", Direzione.ovest, "grimaldello");
 		s = new Stanza("Stanzetta");
 		a = new Attrezzo("grimaldello", 1);
-		sb.impostaStanzaAdiacente("ovest", s);
+		sb.impostaStanzaAdiacente(Direzione.ovest, s);
 	}
 	
 	@Test
 	public void testGetStanzaAdiacenteDirezioneBloccata() {
-		assertEquals(sb, sb.getStanzaAdiacente("ovest"));
+		assertEquals(sb, sb.getStanzaAdiacente(Direzione.ovest));
 	}
 	
 	@Test
 	public void testGetStanzaAdiacenteDirezioneSbloccata() {
 		sb.addAttrezzo(a);
-		assertEquals(s, sb.getStanzaAdiacente("ovest"));
+		assertEquals(s, sb.getStanzaAdiacente(Direzione.ovest));
 	}
 
 	@Test

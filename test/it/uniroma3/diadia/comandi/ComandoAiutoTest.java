@@ -19,7 +19,7 @@ public class ComandoAiutoTest {
 	}
 	
 	@Test
-	public void testPartitaConComandoAiuto() {
+	public void testPartitaConComandoAiuto() throws Exception {
 		String[] righeDaLeggere = {"aiuto", "fine"};
 		IOSimulator io = Fixture.creaSimulazionePartitaEGioca(righeDaLeggere);
 		assertTrue(io.hasNextMessaggio());

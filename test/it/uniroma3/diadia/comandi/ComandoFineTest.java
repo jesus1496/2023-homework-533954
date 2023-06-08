@@ -17,7 +17,7 @@ public class ComandoFineTest {
 	}
 
 	@Test
-	public void testPartitaConComandoFine() {
+	public void testPartitaConComandoFine() throws Exception {
 		String[] righeDaLeggere = {"fine"};
 		IOSimulator io = Fixture.creaSimulazionePartitaEGioca(righeDaLeggere);
 		assertTrue(io.hasNextMessaggio());

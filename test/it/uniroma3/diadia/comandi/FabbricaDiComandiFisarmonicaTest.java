@@ -2,6 +2,8 @@ package it.uniroma3.diadia.comandi;
 
 import static org.junit.Assert.*;
 
+import java.util.Scanner;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,10 +20,11 @@ public class FabbricaDiComandiFisarmonicaTest {
 	private FabbricaDiComandiFisarmonica fabbrica;
 	private IO io;
 	private Comando expected;
+	private Scanner scanner;
 
 	@Before
 	public void setUp() throws Exception{
-		io = new IOConsole();
+		io = new IOConsole(scanner);
 		fabbrica = new FabbricaDiComandiFisarmonica(io);
 	}
 	

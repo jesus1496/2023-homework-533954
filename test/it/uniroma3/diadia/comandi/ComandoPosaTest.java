@@ -2,11 +2,14 @@ package it.uniroma3.diadia.comandi;
 
 import static org.junit.Assert.*;
 
+import java.util.Scanner;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 import it.uniroma3.diadia.comando.ComandoPosa;
 
@@ -15,13 +18,14 @@ public class ComandoPosaTest {
 	private Attrezzo attrezzo;
 	private ComandoPosa comandoPosa;
 	private Partita partita;
-	private IOConsole io;
+	private Scanner scanner;
+	private Labirinto labirinto;
 	
 	@Before
 	public void setUp() throws Exception {
 		this.comandoPosa = new ComandoPosa();
-		this.comandoPosa.setIo(new IOConsole());
-		this.partita = new Partita();
+		this.comandoPosa.setIo(new IOConsole(scanner));
+		this.partita = new Partita(labirinto);
 		this.attrezzo = new Attrezzo("martello", 2); 
 	}
 	
@@ -29,14 +33,14 @@ public class ComandoPosaTest {
 	public void testAttrezzoPosato() {
 		partita.getGiocatore().getBorsa().addAttrezzo(attrezzo);
 		comandoPosa.setParametro("martello");
-		comandoPosa.esegue(partita);
+		comandoPosa.esegui(partita);
 		assertTrue(partita.getStanzaCorrente().hasAttrezzo("martello"));
 	}
 	
 	@Test 
 	public void testAttrezzoPosatoNull(){
 		comandoPosa.setParametro("martello");
-		comandoPosa.esegue(partita);
+		comandoPosa.esegui(partita);
 		assertFalse(partita.getStanzaCorrente().hasAttrezzo("martello"));
 	}
 	
@@ -51,7 +55,7 @@ public class ComandoPosaTest {
 		this.creatoreAttrezzi();
 		partita.getGiocatore().getBorsa().addAttrezzo(attrezzo);
 		comandoPosa.setParametro("martello");
-		comandoPosa.esegue(partita);
+		comandoPosa.esegui(partita);
 		assertFalse(partita.getStanzaCorrente().hasAttrezzo("martello"));
 	}
 	
