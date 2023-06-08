@@ -24,7 +24,7 @@ public class Giocatore {
 	 * aggiorna il numero di cfu
 	 * @param cfu aggiornate
 	 */
-	public void setCfu(int cfu2) {
+	public void setCfu(int cfu) {
 		this.cfu = cfu;
 	}
 	

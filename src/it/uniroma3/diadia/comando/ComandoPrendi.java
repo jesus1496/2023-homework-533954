@@ -1,42 +1,23 @@
 package it.uniroma3.diadia.comando;
 
-import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
-public class ComandoPrendi implements Comando {
+public class ComandoPrendi extends AbstractComando {
 	
-	private IO io;
 	private String nomeAttrezzo;
 	private static final String NOME = "prendi";
 
 	@Override
-	public void esegue(Partita partita) {
+	public void esegui(Partita partita) {
 		if(!partita.getStanzaCorrente().hasAttrezzo(nomeAttrezzo)) {
-			io.mostraMessaggio("Attrezzo " + nomeAttrezzo + " non presente");
+			this.getIo().mostraMessaggio("Attrezzo " + nomeAttrezzo + " non presente");
 			return;
 		}
 		Attrezzo attrezzo = partita.getStanzaCorrente().getAttrezzo(nomeAttrezzo);
 		partita.getGiocatore().getBorsa().addAttrezzo(attrezzo);
 		partita.getStanzaCorrente().removeAttrezzo(attrezzo);
-		io.mostraMessaggio("Attrezzo" + nomeAttrezzo + "preso!");
-	}
-
-	@Override
-	public void setParametro(String parametro) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setIo(IO io) {
-		this.io = io;
-	}
-
-	@Override
-	public String getParametro() {
-		// TODO Auto-generated method stub
-		return null;
+		this.getIo().mostraMessaggio("Attrezzo" + nomeAttrezzo + "preso!");
 	}
 
 	@Override

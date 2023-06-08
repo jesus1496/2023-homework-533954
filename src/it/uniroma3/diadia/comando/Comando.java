@@ -9,7 +9,7 @@ public interface Comando {
 	 * esecuzione del comando
 	 * 
 	 */
-	public void esegue(Partita partita);
+	public void esegui(Partita partita);
 	
 	/**
 	 * 
@@ -23,4 +23,7 @@ public interface Comando {
 	public String getParametro();
 	
 	public String getNome();
+
+	public IO getIo();
+
 }
